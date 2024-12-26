@@ -69,6 +69,44 @@
       ctx.closePath();
       ctx.stroke()
 
+      // 圆形
+      ctx.beginPath();
+      ctx.arc(60, 510, 40, 0, 2 * Math.PI);
+      ctx.stroke();
+
+      // 椭圆
+      ctx.beginPath();
+      // ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle)
+      // x,y: 椭圆中心点坐标
+      // radiusX: 椭圆X轴半径
+      // radiusY: 椭圆Y轴半径  
+      // rotation: 椭圆旋转角度(弧度)
+      // startAngle: 起始角度(弧度)
+      // endAngle: 结束角度(弧度)
+      ctx.ellipse(210, 510, 40, 20, 0, 0, 2 * Math.PI);
+      ctx.stroke();
+
+      // 曲线
+      ctx.beginPath();
+      ctx.moveTo(400, 100);
+      // quadraticCurveTo(cpx, cpy, x, y)
+      // cpx,cpy: 控制点坐标
+      // x,y: 曲线终点坐标
+      // 从当前点开始绘制二次贝塞尔曲线
+      // 控制点(250,170)决定曲线的弯曲程度
+      // 终点(230,20)是曲线的结束位置
+      ctx.quadraticCurveTo(450, 170, 600, 20);
+      ctx.stroke();
+
+      // 贝塞尔曲线
+      ctx.beginPath();
+      ctx.moveTo(300, 200);
+      // bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y)
+      // cp1x,cp1y: 第一个控制点坐标
+      // cp2x,cp2y: 第二个控制点坐标
+      // x,y: 曲线终点坐标
+      ctx.bezierCurveTo(360, 210, 360, 450, 500, 500);
+      ctx.stroke();
     </script>
   </body>
   </html>
