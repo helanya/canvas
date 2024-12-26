@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    canvas {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas"></canvas>
+</body>
+<script>
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
+  canvas.width = 800;
+  canvas.height = 600;
+
+  // 绘制矩形
+  // fillStyle 设置填充颜色
+  ctx.fillStyle = "red";
+  // 绘制一个红色矩形，位置在(10,10)，宽高都是100
+  ctx.fillRect(10, 10, 100, 100);
+
+
+  // 绘制直线
+  // 开始一个新的绘制路径
+  ctx.beginPath();
+  // 将画笔移动到起点(10,10)
+  ctx.moveTo(110, 60);
+  // 从起点画一条直线到终点(100,100)
+  ctx.lineTo(210, 60);
+  ctx.lineWidth = 2;
+  // 绘制路径
+  ctx.stroke();
+
+  // 绘制圆
+  ctx.beginPath();
+  // arc(x, y, radius, startAngle, endAngle)
+  // x,y: 圆心坐标
+  // radius: 圆的半径
+  // startAngle: 起始角度(弧度)
+  // endAngle: 结束角度(弧度)
+  ctx.arc(260, 60, 50, 0, Math.PI * 2);
+  // stroke()方法用于绘制路径的轮廓
+  // 它会沿着之前定义的路径(beginPath、arc等)绘制线条
+  // strokeStyle 设置样式
+  ctx.strokeStyle = "blue";
+  // fillStyle 设置填充颜色
+  ctx.fillStyle = "green";
+  // fill()方法用于填充路径
+  // 它会沿着之前定义的路径(beginPath、arc等)填充颜色
+  ctx.fill();
+  // stroke()方法用于绘制路径的轮廓
+  // 它会沿着之前定义的路径(beginPath、arc等)绘制线条
+  ctx.stroke();
+
+  // 绘制文本
+  ctx.font = "40px Arial";
+  ctx.fillText("Hello World", 310, 50);
+  // strokeText()方法用于绘制文本的轮廓
+  ctx.font = "40px Arial";
+  ctx.strokeStyle = "blue";
+  ctx.strokeText("Hello World", 310, 90);
+
+  // 文本对齐
+  ctx.textBaseline = "middle";
+  ctx.textAlign = "center";
+  ctx.fillText("Hello World", 510, 60);
+
+  // 渐变
+  // createLinearGradient(x0, y0, x1, y1)
+  // x0,y0: 渐变的起点坐标
+  // x1,y1: 渐变的终点坐标
+  // 创建一个线性渐变,从(0,0)到(50,100)
+  const gradient = ctx.createLinearGradient(10, 110, 110, 210);
+  gradient.addColorStop(0, "red");
+  gradient.addColorStop(1, "blue");
+  ctx.fillStyle = gradient;
+  ctx.fillRect(10, 110, 100, 100);
+
+
+</script>
+
+</html>
