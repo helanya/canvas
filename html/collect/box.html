@@ -44,7 +44,6 @@
     Box.prototype.draw = function () {
       ctx.lineWidth = 2
       ctx.strokeStyle = this.color
-      console.log(this.position.x, this.position.y, this.width, this.height)
       ctx.strokeRect(this.position.x, this.position.y, this.width, this.height)
     }
 
@@ -65,6 +64,14 @@
     })
 
 
+    function collision(box1, box2) {
+      if (box1.position.x + box1.width >= box2.position.x && box1.position.x) {
+        return true
+      }
+      return false
+    }
+
+
     function animate() {
       requestAnimationFrame(animate)
       ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -72,6 +79,11 @@
       box2.draw()
 
       box1.position.x++
+
+      if (collision(box1, box2)) {
+        box1.color = 'green'
+        box2.color = 'green'
+      }
     }
 
     animate()
