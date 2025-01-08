@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    canvas {
+      width: 800px;
+      height: 400px;
+      background-color: #000;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <script>
+    const canvas = document.getElementById('canvas')
+    canvas.width = 800
+    canvas.height = 400
+    const ctx = canvas.getContext('2d')
+
+    const centerX = canvas.width / 2
+    const centerY = canvas.height / 2
+
+    function Box({
+      position = {x: 0, y: 0},
+      color = 'red',
+      width = 100,
+      height = 100,
+      velocity = { x: 0, y: 0 },
+    }) {
+      this.position = position
+      this.color = color
+      this.width = width
+      this.height = height
+      this.velocity = velocity
+    }
+
+    Box.prototype.draw = function () {
+      ctx.lineWidth = 2
+      ctx.strokeStyle = this.color
+      console.log(this.position.x, this.position.y, this.width, this.height)
+      ctx.strokeRect(this.position.x, this.position.y, this.width, this.height)
+    }
+
+    new Box({
+      position: { x: centerX - 150, y: centerY - 50 },
+      color: 'red',
+      width: 100,
+      height: 100,
+      velocity: { x: 1, y: 1 },
+    }).draw()
+
+    new Box({
+      position: { x: centerX + 50, y: centerY - 50 },
+      color: 'blue',
+      width: 100,
+      height: 100,
+      velocity: { x: 1, y: 1 },
+    }).draw()
+  </script>
+</body>
+</html>
