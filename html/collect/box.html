@@ -48,7 +48,7 @@
     }
 
     const box1 = new Box({
-      position: { x: centerX - 150, y: centerY - 50 },
+      position: { x: centerX - 150, y: centerY + 80 },
       color: 'red',
       width: 100,
       height: 100,
@@ -65,7 +65,7 @@
 
 
     function collision(box1, box2) {
-      if (box1.position.x + box1.width >= box2.position.x && box1.position.x) {
+      if (box1.position.x + box1.width >= box2.position.x && box1.position.x <= box2.position.x + box2.width && box1.position.y + box1.height >= box2.position.y && box1.position.y <= box2.position.y + box2.height) {
         return true
       }
       return false
