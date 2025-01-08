@@ -48,21 +48,33 @@
       ctx.strokeRect(this.position.x, this.position.y, this.width, this.height)
     }
 
-    new Box({
+    const box1 = new Box({
       position: { x: centerX - 150, y: centerY - 50 },
       color: 'red',
       width: 100,
       height: 100,
       velocity: { x: 1, y: 1 },
-    }).draw()
+    })
 
-    new Box({
+    const box2 =new Box({
       position: { x: centerX + 50, y: centerY - 50 },
       color: 'blue',
       width: 100,
       height: 100,
       velocity: { x: 1, y: 1 },
-    }).draw()
+    })
+
+
+    function animate() {
+      requestAnimationFrame(animate)
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      box1.draw()
+      box2.draw()
+
+      box1.position.x++
+    }
+
+    animate()
   </script>
 </body>
 </html>
