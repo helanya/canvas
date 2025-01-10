@@ -48,7 +48,7 @@
     }
 
     const box1 = new Box({
-      position: { x: centerX - 150, y: centerY + 80 },
+      position: { x: centerX - 150, y: centerY - 50 },
       color: 'red',
       width: 100,
       height: 100,
@@ -71,19 +71,32 @@
       return false
     }
 
+    let flag = false
 
     function animate() {
       requestAnimationFrame(animate)
       ctx.clearRect(0, 0, canvas.width, canvas.height)
+
       box1.draw()
       box2.draw()
+      // box2.position.x += box2.velocity.x
 
-      box1.position.x++
+      if (flag) {
+        box1.position.x -= box1.velocity.x
+      } else {
+        box1.position.x += box1.velocity.x
+      }
 
       if (collision(box1, box2)) {
         box1.color = 'green'
         box2.color = 'green'
+        flag = !flag
+      } else {
+        box1.color = 'red'
+        box2.color = 'blue'
+        // box1.position.x += box1.velocity.x
       }
+
     }
 
     animate()
