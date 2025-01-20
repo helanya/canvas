@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>彩虹效果</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    canvas {
+      width: 100vw;
+      height: 100vh;
+      display: block;
+    }
+
+    .controls {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 10px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="controls">
+    <label>角度: <input type="range" id="angle" min="0" max="360" value="0"></label><br>
+    <label>颜色宽度: <input type="range" id="width" min="5" max="50" value="20"></label><br>
+    <label>圆角: <input type="range" id="radius" min="0" max="50" value="0"></label><br>
+    <label>间距: <input type="range" id="gap" min="0" max="50" value="0"></label><br>
+    <label>段数: <input type="range" id="segments" min="1" max="10" value="1"></label>
+  </div>
+  <canvas id="canvas"></canvas>
+  <script>
+    const canvas = document.querySelector('canvas');
+    const ctx = canvas.getContext('2d');
+
+    // 设置画布尺寸
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // 彩虹颜色数组
+    const colors = [
+      '#FF0000', // 红
+      '#FF7F00', // 橙
+      '#FFFF00', // 黄
+      '#00FF00', // 绿
+      '#0000FF', // 蓝
+      '#4B0082', // 靛
+      '#9400D3'  // 紫
+    ];
+
+    // 控制参数
+    const controls = {
+      angle: 0,
+      width: 20,
+      radius: 0,
+      gap: 0,
+      segments: 1
+    };
+
+    // 获取控制元素
+    document.getElementById('angle').addEventListener('input', (e) => {
+      controls.angle = parseInt(e.target.value);
+      draw();
+    });
+
+    document.getElementById('width').addEventListener('input', (e) => {
+      controls.width = parseInt(e.target.value);
+      draw();
+    });
+
+    document.getElementById('radius').addEventListener('input', (e) => {
+      controls.radius = parseInt(e.target.value);
+      draw();
+    });
+
+    document.getElementById('gap').addEventListener('input', (e) => {
+      controls.gap = parseInt(e.target.value);
+      draw();
+    });
+
+    document.getElementById('segments').addEventListener('input', (e) => {
+      controls.segments = parseInt(e.target.value);
+      draw();
+    });
+
+    function drawRainbow() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height + 100;
+
+      const angleInRadians = (controls.angle * Math.PI) / 180;
+
+      ctx.save();
+      ctx.translate(centerX, centerY);
+      ctx.rotate(angleInRadians);
+      ctx.translate(-centerX, -centerY);
+
+      colors.forEach((color, index) => {
+        const radius = 400 + (index * (controls.width + controls.gap));
+
+        // 计算每段的弧长
+        const segmentAngle = Math.PI / controls.segments;
+        // 每段之间的间隔角度
+        const gapAngle = segmentAngle * 0.1; // 间隔为段长的10%
+
+        // 绘制每一段
+        for (let i = 0; i < controls.segments; i++) {
+          const startAngle = Math.PI - (i * segmentAngle) - (i * gapAngle);
+          const endAngle = startAngle - segmentAngle;
+
+          ctx.beginPath();
+          ctx.arc(centerX, centerY, radius, startAngle, endAngle, true);
+
+          // 设置渐变
+          const gradient = ctx.createLinearGradient(
+            centerX - radius, centerY - radius,
+            centerX + radius, centerY - radius
+          );
+          gradient.addColorStop(0.5, color);
+          gradient.addColorStop(1, 'rgba(255,255,255,0)');
+
+          ctx.lineWidth = controls.width;
+          ctx.lineCap = controls.radius > 0 ? 'round' : 'butt';
+          ctx.strokeStyle = gradient;
+          ctx.stroke();
+        }
+      });
+
+      ctx.restore();
+    }
+
+    function draw() {
+      requestAnimationFrame(drawRainbow);
+    }
+
+    draw();
+  </script>
+</body>
+
+</html>
